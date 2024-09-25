@@ -77,18 +77,17 @@ dependencies {
     // Hilt
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
-//    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-//    implementation (libs.hilt.android)
-//    kapt(libs.hilt.android.compiler)
-//    kapt(libs.hilt.compiler)
 
     // Retrofit & Moshi
     implementation (libs.retrofit)
-    implementation (libs.converter.moshi)
-    implementation (libs.moshi)
-    implementation (libs.moshi.kotlin)
+//    implementation (libs.converter.moshi)
+//    implementation (libs.moshi)
+//    implementation (libs.moshi.kotlin)
+    implementation (libs.okhttp)
+    implementation (libs.logging.interceptor)
+    implementation (libs.retrofit2.converter.gson)
 
     // Coroutines
     implementation (libs.kotlinx.coroutines.android)

@@ -1,35 +1,61 @@
 package com.weatherapp.data.network.model
 
-import com.squareup.moshi.Json
-
 /**
- * WeatherResponse represents the structure of the weather data
- * returned by the weather API.
- *
- * This data class uses Moshi annotations to map JSON fields to Kotlin properties.
- *
- * @property main contains temperature information.
- * @property weather contains a list of weather conditions, including icons.
+ * Data class for holding API response data schema
  */
-data class WeatherResponse(
-    @Json(name = "main") val main: Main,
-    @Json(name = "weather") val weather: List<Weather>
-) {
-    /**
-     * Main represents the main weather information such as temperature.
-     *
-     * @property temp stores the current temperature.
-     */
-    data class Main(
-        @Json(name = "temp") val temp: Double
-    )
+import com.google.gson.annotations.SerializedName
 
-    /**
-     * Weather represents specific weather conditions such as the icon for the current weather state.
-     *
-     * @property icon stores the icon code representing the weather condition.
-     */
-    data class Weather(
-        @Json(name = "icon") val icon: String
-    )
-}
+data class WeatherResponse(
+    @SerializedName("coord") val coord: Coord?,
+    @SerializedName("weather") val weather: List<Weather>?,
+    @SerializedName("base") val base: String?,
+    @SerializedName("main") val main: Main?,
+    @SerializedName("visibility") val visibility: Int?,
+    @SerializedName("wind") val wind: Wind?,
+    @SerializedName("clouds") val clouds: Clouds?,
+    @SerializedName("dt") val dt: Long?,
+    @SerializedName("sys") val sys: Sys?,
+    @SerializedName("timezone") val timezone: Int?,
+    @SerializedName("id") val id: Int?,
+    @SerializedName("name") val name: String?,
+    @SerializedName("cod") val cod: Int?,
+    @SerializedName("message") val message: String?
+)
+
+data class Coord(
+    @SerializedName("lon") val lon: Double?,
+    @SerializedName("lat") val lat: Double?
+)
+
+data class Weather(
+    @SerializedName("id") val id: Int?,
+    @SerializedName("main") val main: String?,
+    @SerializedName("description") val description: String?,
+    @SerializedName("icon") val icon: String
+)
+
+data class Main(
+    @SerializedName("temp") val temp: Double?,
+    @SerializedName("feels_like") val feels_like: Double?,
+    @SerializedName("temp_min") val temp_min: Double?,
+    @SerializedName("temp_max") val temp_max: Double?,
+    @SerializedName("pressure") val pressure: Int?,
+    @SerializedName("humidity") val humidity: Int?
+)
+
+data class Wind(
+    @SerializedName("speed") val speed: Double?,
+    @SerializedName("deg") val deg: Int?
+)
+
+data class Clouds(
+    @SerializedName("all") val all: Int?
+)
+
+data class Sys(
+    @SerializedName("type") val type: Int?,
+    @SerializedName("id") val id: Int?,
+    @SerializedName("country") val country: String?,
+    @SerializedName("sunrise") val sunrise: Long?,
+    @SerializedName("sunset") val sunset: Long?
+)

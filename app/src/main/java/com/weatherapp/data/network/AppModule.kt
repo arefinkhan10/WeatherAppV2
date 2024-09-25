@@ -1,15 +1,19 @@
 package com.weatherapp.data.network
 
 import com.weatherapp.data.network.service.WeatherApiService
-import com.weatherapp.repo.WeatherRepository
 import com.weatherapp.domain.utilities.Const
+import com.weatherapp.repo.WeatherRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+
 
 /**
  * AppModule provides application-level dependencies for the weather app.
@@ -32,9 +36,20 @@ object AppModule {
     @Provides
     @Singleton
     fun provideWeatherApiService(): WeatherApiService {
+
+        val builder = OkHttpClient().newBuilder()
+        builder.readTimeout(10, TimeUnit.SECONDS)
+        builder.connectTimeout(5, TimeUnit.SECONDS)
+
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
+        builder.addInterceptor(interceptor)
+        val client = builder.build()
+
         return Retrofit.Builder()
             .baseUrl(Const.BASE_URL)  // Use the base URL from the Const object
-            .addConverterFactory(MoshiConverterFactory.create())  // Use Moshi for JSON parsing
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
             .build()
             .create(WeatherApiService::class.java)
     }
